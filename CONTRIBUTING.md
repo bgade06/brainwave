@@ -19,7 +19,7 @@ Welcome. This is how real teams ship. Follow it and your Git history becomes som
 
 - **No direct pushes to `main`.** Ever. `main` stays releasable.
 - **One issue per PR.** Keep them small enough to review in 10 minutes.
-- **If you use an AI assistant** (Claude Code, Copilot), read [`CLAUDE.md`](./CLAUDE.md) first. You own every line you submit — be able to explain it.
+- **You own every line you submit** — be able to explain it in review, however it was written.
 - **Ask in the open.** If you're stuck, open a draft PR or comment on the issue. Questions in public help the whole cohort.
 
 ## Good first issues

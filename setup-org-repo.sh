@@ -59,7 +59,7 @@ mk "Add ideas to a topic (API + UI)" \
 "backend,frontend,good first issue,phase-1"
 
 mk "AI analysis: themes + suggestions + action items" \
-"Add \`POST /topics/:id/analyze\`. Send the topic's goal + all ideas to the Claude API and return: themes, suggestions, and a list of action items. Keep the prompt in a versioned \`server/lib/prompts.js\` (prompts are code). Record token usage on the response. Persist the result.
+"Add \`POST /topics/:id/analyze\`. Send the topic's goal + all ideas to the LLM (via AWS Bedrock) and return: themes, suggestions, and a list of action items. Keep the prompt in a versioned \`server/lib/prompts.js\` (prompts are code). Record token usage on the response. Persist the result.
 
 **Why:** this is the product's brain — raw ideas become prioritizable action. Cost tracking starts here." \
 "ai,backend,phase-1"

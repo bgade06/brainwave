@@ -18,7 +18,7 @@ flowchart LR
   end
 
   DB[("MongoDB&#10;orgs · users · topics&#10;ideas · action items")]
-  Bedrock[["AWS Bedrock&#10;Claude (Haiku / Sonnet / Opus)"]]
+  Bedrock[["AWS Bedrock&#10;LLM (foundation models)"]]
   Jira[("Jira Cloud&#10;REST + webhooks")]
   IdP["Google / GitHub (OAuth)"]
 
@@ -39,7 +39,7 @@ sequenceDiagram
   participant C as React Client
   participant A as Express API
   participant M as MongoDB
-  participant B as AWS Bedrock (Claude)
+  participant B as AWS Bedrock (LLM)
 
   U->>C: Click "Analyze topic"
   C->>A: POST /topics/:id/analyze
@@ -58,24 +58,23 @@ sequenceDiagram
 | Frontend | React + Vite | SPA, fast dev server |
 | Backend | Node + Express | REST API |
 | Data | MongoDB (Atlas) | document-shaped data; Atlas Vector Search for RAG in a later phase — no second datastore |
-| LLM access | **AWS Bedrock** via the AnthropicBedrock SDK | one IAM-governed provider; HIPAA-eligible under an AWS BAA; no scattered vendor keys |
-| Models | Claude **Haiku 4.5 / Sonnet 4.6 / Opus 4.8**, tier-routed | match model cost to task difficulty |
-| Embeddings (later) | Bedrock embeddings (Titan / Cohere) | same single-provider path; `embeddings.js` sibling of `claude.js` |
+| LLM access | **AWS Bedrock** (Runtime SDK) | one IAM-governed provider; HIPAA-eligible under an AWS BAA; no scattered vendor keys |
+| Models | Foundation models, **tier-routed (small / mid / large)** | match model cost to task difficulty |
+| Embeddings (later) | Bedrock embeddings | same single-provider path; `embeddings.js` sibling of `llm.js` |
 | Auth | OAuth 2.0 (Google / GitHub) | third-party login; no password storage |
 | Integrations | Jira Cloud REST + webhooks | two-way sync (Phase 4) |
-| Dev agent | Claude Code (canonical), GitHub Copilot (optional) | how we build, and how we teach building |
 | Infra (later) | AWS | Bedrock region + deploy target |
 
 ## LLM model routing
 
 Don't pay Opus prices for work Haiku does well. The AI service routes by task:
 
-| Task | Model | Why |
+| Task | Model tier | Why |
 |---|---|---|
-| Idea clustering / quick summary | Claude Haiku 4.5 | cheap, fast, high volume |
-| Topic analysis → action items | Claude Sonnet 4.6 | strong reasoning at moderate cost (the default) |
-| Hardest synthesis / conflict reasoning (later) | Claude Opus 4.8 | maximum reasoning when it actually pays off |
-| Semantic search over topic history (later) | Bedrock embeddings | RAG retrieval |
+| Idea clustering / quick summary | Small (fast) | cheap, fast, high volume |
+| Topic analysis → action items | Mid (balanced) | strong reasoning at moderate cost (the default) |
+| Hardest synthesis / conflict reasoning (later) | Large (deep) | maximum reasoning when it actually pays off |
+| Semantic search over topic history (later) | Embeddings | RAG retrieval |
 
 Every model call records token usage so cost is visible from day one (and feeds the cost dashboard later).
 
@@ -83,8 +82,8 @@ Every model call records token usage so cost is visible from day one (and feeds 
 
 | # | Decision | Choice | Judgment (why this, not the alternative) |
 |---|---|---|---|
-| D1 | LLM provider path | Claude via **AWS Bedrock** | One governed provider with IAM creds and a HIPAA-eligible path, vs. a raw API key per developer. Enterprise-ready and auditable. |
-| D2 | Model selection | Tier-routed (Haiku / Sonnet / Opus) | Cost scales with task. A single big model everywhere wastes money on easy work and caps quality on hard work. |
+| D1 | LLM provider path | **AWS Bedrock** | One governed provider with IAM creds and a HIPAA-eligible path, vs. a raw API key per developer. Enterprise-ready and auditable. |
+| D2 | Model selection | Tier-routed (small / mid / large) | Cost scales with task. A single big model everywhere wastes money on easy work and caps quality on hard work. |
 | D3 | Datastore | MongoDB (Atlas) | Topics/ideas are document-shaped. Atlas Vector Search lets us do RAG later without standing up a second datastore. |
 | D4 | Jira integration | Open-source connector | Commodity plumbing — MIT, reusable, not methodology. Keeping it open is the whole point of open-core. |
 | D5 | Auth | OAuth, no passwords | Offload credential security to identity providers. Faster to ship, safer to operate. |

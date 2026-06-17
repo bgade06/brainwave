@@ -45,7 +45,7 @@ Brainstorms generate energy and a pile of sticky notes — then nothing happens.
 Every non-trivial choice gets written down: **Problem → the CS pattern it maps to → the architecture → the judgment call (why this, not the alternative).** Senior engineering is knowing *when not* to reach for something. Document the "why not" as much as the "why."
 
 ## Stack
-React + Vite (frontend) · Node + Express (backend) · MongoDB (data) · **Claude on AWS Bedrock** (AI) · OAuth for login · Jira REST API + webhooks (Phase 4). Full detail and diagrams in [`ARCHITECTURE.md`](./ARCHITECTURE.md).
+React + Vite (frontend) · Node + Express (backend) · MongoDB (data) · **AWS Bedrock** (LLM) · OAuth for login · Jira REST API + webhooks (Phase 4). Full detail and diagrams in [`ARCHITECTURE.md`](./ARCHITECTURE.md).
 
 ## The fence — what's open vs. what's protected
 Brainwave is **Emergtech intellectual property**: a general-purpose brainstorming product the company builds, markets, and sells as open-core. It is **not** derived from, and does **not** incorporate, any contributor's pre-existing personal or consulting IP (e.g. proprietary diagnostic methodologies). Building Brainwave here does not entangle anyone's separate, personally-owned work.

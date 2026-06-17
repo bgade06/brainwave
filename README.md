@@ -18,9 +18,8 @@ See [`CHARTER.md`](./CHARTER.md) for the full product spec and the phased build 
 | Frontend | React + Vite | State, forms, async UI |
 | Backend | Node + Express | REST design, multi-tenancy, OAuth |
 | Data | MongoDB | Document modeling, per-org isolation |
-| AI | Claude on AWS Bedrock | Prompts-as-code, tier-routed models, action-item extraction, cost-aware calls |
+| AI | AWS Bedrock (LLM) | Prompts-as-code, tier-routed models, action-item extraction, cost-aware calls |
 | Integrations | Jira REST + webhooks | External APIs, two-way sync (Phase 4) |
-| Dev tooling | Claude Code (canonical), Copilot (optional) | AI-assisted engineering, the way we teach it |
 
 See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for system + sequence diagrams, the LLM model-routing table, and the decision record.
 
@@ -40,7 +39,6 @@ cd brainwave
 ## How we work
 - Branch → pull request → review. No direct pushes to `main`.
 - Pick an issue, comment to claim it, open a PR when ready. Read [`CONTRIBUTING.md`](./CONTRIBUTING.md).
-- Using Claude Code or Copilot? Read [`CLAUDE.md`](./CLAUDE.md) first.
 
 ## License
 MIT — see [`LICENSE`](./LICENSE). Built and maintained by the Emergtech AI Engineer Accelerator.
