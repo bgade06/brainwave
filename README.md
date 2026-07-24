@@ -23,18 +23,32 @@ See [`CHARTER.md`](./CHARTER.md) for the full product spec and the phased build 
 
 See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for system + sequence diagrams, the LLM model-routing table, and the decision record.
 
-## Roadmap (also the 16-week curriculum)
-1. **Core loop** — topic → ideas → AI analysis + action items
-2. **SaaS shell** — orgs, users, third-party login, multi-tenancy
-3. **Action layer** — prioritize, assign, act
-4. **Jira integration** — create tickets, then two-way sync
+## Implemented
+
+- Topic and idea workspaces with persisted, cached Bedrock analysis
+- Versioned prompts, validated AI output, token-usage metadata, and safe regeneration
+- GitHub and Google OAuth, organization membership, sessions, CSRF protection, and tenant isolation
+- Action-item priority, rationale, claiming, assignment, and status workflows
+- Jira Cloud connection, ticket creation, and webhook-driven status sync
+- Request IDs, liveness/readiness probes, validation, and automated tests
 
 ## Quick start
 ```bash
-git clone https://github.com/emergtechinc/brainwave.git
+git clone https://github.com/bgade06/brainwave.git
 cd brainwave
-# setup instructions land in the first session — see CONTRIBUTING.md
+npm install
+cp server/.env.example server/.env
+cp client/.env.example client/.env
+docker compose up -d mongo
+npm run dev
 ```
+
+The default environment uses a development-only authentication bypass and
+leaves AI and Jira disabled. Configure the documented server environment
+variables to exercise OAuth, Bedrock, or Jira. Never enable `AUTH_BYPASS` in
+production.
+
+Run `npm run verify` before opening a pull request.
 
 ## How we work
 - Branch → pull request → review. No direct pushes to `main`.

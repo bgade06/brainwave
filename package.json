@@ -1,0 +1,22 @@
+{
+  "name": "brainwave",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-powered brainstorming that turns ideas into action",
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=server && npm run build --workspace=client",
+    "dev": "npm run dev --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build"
+  }
+}
