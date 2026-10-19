@@ -66,6 +66,14 @@ describe("Brainwave API", () => {
     expect(response.body).toEqual({ data: { status: "not_ready" } });
   });
 
+  it("reports Jira as not configured when the integration is disabled", async () => {
+    const { app } = buildTestApp();
+    const response = await request(app).get("/integrations/jira/status");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ data: { connected: false, configured: false } });
+  });
+
   it("creates, lists, and reads a topic", async () => {
     const { app } = buildTestApp();
     const created = await request(app).post("/topics").set("x-csrf-token", csrf).send({

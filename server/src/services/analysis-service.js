@@ -61,6 +61,13 @@ export function createAnalysisService({
       if (controller.signal.aborted || error?.name === "AbortError") {
         throw new AppError(504, "AI_PROVIDER_TIMEOUT", "The AI provider timed out");
       }
+      // Keep the provider's reason (e.g. AccessDeniedException) in server logs only.
+      console.error("AI provider request failed", {
+        provider: provider.name,
+        model: provider.model,
+        name: error?.name,
+        message: error?.message,
+      });
       throw new AppError(502, "AI_PROVIDER_ERROR", "The AI provider request failed");
     } finally {
       clearTimeout(timeout);
