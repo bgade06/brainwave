@@ -148,6 +148,11 @@ export function createApp(overrides = {}) {
       csrf: requireCsrf,
       secureCookies: config.NODE_ENV === "production",
     }));
+  } else {
+    // The client always polls status; report "not configured" instead of a 404.
+    app.get("/integrations/jira/status", authenticate, (_request, response) => {
+      response.json({ data: { connected: false, configured: false } });
+    });
   }
   app.use("/topics", authenticate, requireCsrf, createTopicRouter({
     topicService, analysisService,

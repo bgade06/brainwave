@@ -24,7 +24,11 @@ const envSchema = z.object({
 });
 
 export function loadEnv(source = process.env) {
-  const config = envSchema.parse(source);
+  // Blank entries copied from .env.example mean "unset", not an invalid value.
+  const present = Object.fromEntries(
+    Object.entries(source).filter(([, value]) => value !== ""),
+  );
+  const config = envSchema.parse(present);
   if (config.NODE_ENV === "production" && config.AUTH_BYPASS) {
     throw new Error("AUTH_BYPASS is forbidden in production");
   }
